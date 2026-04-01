@@ -8,17 +8,18 @@ class FirstScreen {
     mainMenu() {
         console.log("Bem vindo ao Sistema Nice Market!");
         const prompt = (0, prompt_sync_1.default)();
-        let escolha = Number(prompt("escolha"));
+        let choice;
         let open = true;
         while (open) {
-            escolha = Number(prompt("escolha"));
-            switch (escolha) {
+            console.log("[1] - Cadastramento de Produtos");
+            choice = Number(prompt("Escolha um das opções"));
+            switch (choice) {
                 case 1:
                     console.log("Caso 1");
                     break;
                 case 2:
                     open = false;
-                    console.log("Fecheou");
+                    console.log("Fechou");
                     break;
                 default:
                     break;
@@ -27,5 +28,3 @@ class FirstScreen {
     }
 }
 exports.default = FirstScreen;
-let teste = new FirstScreen();
-teste.mainMenu();
