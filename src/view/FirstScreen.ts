@@ -1,28 +1,42 @@
 import promptSync from "prompt-sync";
-import ProductRegistration from "../Controller/ProductRegistration";
-import Product from "../models/Product";
+import ProductRegistration from "./ProductRegistration";
+import MainController from "../Controller/MainController";
+import SaleView from "./SaleView";
 
 export default class FirstScreen {
+  prompt = promptSync();
+  private controller: MainController;
+
+  constructor(controller: MainController) {
+    this.controller = controller;
+    this.mainMenu();
+  }
+
   public mainMenu(): void {
-    console.log("Bem vindo ao Sistema Nice Market!");
-    const prompt = promptSync();
-
-    let choice!: number;
     let open: boolean = true;
+
     while (open) {
-      console.log("[1] - Cadastramento de Produtos");
+      console.log("\n--- Menu Principal ---");
+      console.log("[1]- Cadastra Produtos");
+      console.log("[2]- Passar produto");
+      console.log("[3]- Sair");
 
-      choice = Number(prompt("Escolha um das opções"));
+      let input = this.prompt("> ").trim();
+      if (input === "") {
+        continue;
+      }
+      let option = parseInt(input);
 
-      switch (choice) {
+      switch (option) {
         case 1:
-          console.log("Caso 1");
-          let product: ProductRegistration = new ProductRegistration();
-          product.addProduct(Number(prompt("Digite o ID do produto")));
+          new ProductRegistration(this.controller);
           break;
         case 2:
+          new SaleView(this.controller);
+          break;
+        case 3:
           open = false;
-          console.log("Fechou");
+          console.log("Fechamendo do caixa");
           break;
         default:
           break;

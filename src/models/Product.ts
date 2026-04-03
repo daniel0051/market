@@ -1,15 +1,21 @@
-export default abstract class Product {
+export enum ProductType {
+  PERISHABLE = "Perecível",
+  ELECTRONIC = "Eletrônico",
+  WEIGHT = "Por Peso",
+}
+
+export default class Product {
   private id: number = 0;
   private name: string = "";
   private basePrice: number = 0;
-  private type: string = "";
+  protected type!: ProductType;
 
-  constructor(id: number, name: string, basePrice: number) {
+  /* constructor(id: number, name: string, basePrice: number) {
     this.id = id;
     this.name = name;
     this.basePrice = basePrice;
     this.type = this.constructor.name;
-  }
+  } */
 
   public getName(): string {
     return this.name;
@@ -27,10 +33,32 @@ export default abstract class Product {
     return this.type;
   }
 
-  public setBasePrice(newPrice: number): void {
-    if (newPrice > 0) this.basePrice = newPrice;
+  public setId(id: number): void {
+    if (id > 0) {
+      this.id = id;
+    } else {
+      console.error("ID inválido: Deve ser maior que zero.");
+    }
+  }
+
+  public setName(name: string): void {
+    if (name.trim().length > 0) {
+      this.name = name;
+    } else {
+      console.error("Nome inválido: Não pode ser vazio.");
+    }
+  }
+
+  public setBasePrice(price: number): void {
+    if (price >= 0) {
+      this.basePrice = price;
+    } else {
+      console.error("Preço inválido: Não pode ser negativo.");
+    }
   }
 
   // Métodos
-  public abstract calculateFinalPrice(): number;
+  public calculateFinalPrice(): number {
+    return this.basePrice;
+  }
 }

@@ -1,3 +1,4 @@
+import Database from "../database/Database";
 import Product from "./Product";
 
 export enum PaymentMethod {
@@ -10,29 +11,36 @@ export default class Checkout {
   private listItens: Product[] = [];
   private formPayment: string = "";
 
-  public addItems(...products: Product[]): void {
-    this.listItens.push(...products);
+  public addItem(product: Product): void {
+    this.listItens.push(product);
   }
 
   public calculateTotal(): number {
-    let total: number = 0;
-
-    this.listItens.forEach((item) => {
-      total += item.calculateFinalPrice();
-    });
-
-    return total;
+    return this.listItens.reduce(
+      (total, item) => total + item.calculateFinalPrice(),
+      0,
+    );
   }
 
   public finishSale(method: PaymentMethod): void {
-    if (this.listItens.length === 0)
-      return console.log("Carrinho vazio! Adicione itens antes de pagar.");
-
     this.formPayment = method;
-    const total = this.calculateTotal();
 
-    console.log(`--- VENDA FINALIZADA ---`);
-    console.log(`Total: R$ ${total.toFixed(2)}`);
-    console.log(`Pago com: ${this.formPayment}`);
+    console.log("\n==============================");
+    console.log("       CUPOM FISCAL          ");
+    console.log("==============================");
+
+    this.listItens.forEach((item) => {
+      console.log(
+        `${item.getName()} .... R$ ${item.calculateFinalPrice().toFixed(2)}`,
+      );
+    });
+
+    console.log("------------------------------");
+    console.log(`TOTAL: R$ ${this.calculateTotal().toFixed(2)}`);
+    console.log(`PAGAMENTO: ${this.formPayment}`);
+    console.log("==============================\n");
+
+    // Limpa o carrinho para a próxima venda se necessário
+    this.listItens = [];
   }
 }
