@@ -10,13 +10,6 @@ export default class Product {
   private basePrice: number = 0;
   protected type!: ProductType;
 
-  /* constructor(id: number, name: string, basePrice: number) {
-    this.id = id;
-    this.name = name;
-    this.basePrice = basePrice;
-    this.type = this.constructor.name;
-  } */
-
   public getName(): string {
     return this.name;
   }
@@ -57,7 +50,6 @@ export default class Product {
     }
   }
 
-  // Métodos
   public calculateFinalPrice(): number {
     return this.basePrice;
   }

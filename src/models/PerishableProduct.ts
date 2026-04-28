@@ -3,15 +3,10 @@ import Product from "./Product";
 export default class PerishableProduct extends Product {
   private dateValidity!: Date;
 
-  /* constructor(id: number, name: string, price: number, date: string) {
-    super(id, name, price);
-    this.dateValidity = new Date(date);
-    this.dateValidity.setHours(0, 0, 0, 0);
-  } */
-
   public setDateValidity(dateString: string): void {
     const novaData = new Date(dateString);
     novaData.setHours(0, 0, 0, 0);
+    this.dateValidity = novaData;
   }
 
   getDateValidity(): String {

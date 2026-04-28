@@ -1,4 +1,4 @@
-import Database from "../database/Database";
+import People from "./People";
 import Product from "./Product";
 
 export enum PaymentMethod {
@@ -10,16 +10,29 @@ export enum PaymentMethod {
 export default class Checkout {
   private listItens: Product[] = [];
   private formPayment: string = "";
+  private client?: People;
+
+  public idCliente(client: People): void {
+    this.client = client;
+  }
 
   public addItem(product: Product): void {
     this.listItens.push(product);
   }
 
   public calculateTotal(): number {
-    return this.listItens.reduce(
+    const subtotal = this.listItens.reduce(
       (total, item) => total + item.calculateFinalPrice(),
       0,
     );
+
+    if (this.client) {
+      const discountPercentage = this.client.getDiscount();
+      const discountValue = subtotal * discountPercentage;
+      return subtotal - discountValue;
+    }
+
+    return subtotal;
   }
 
   public finishSale(method: PaymentMethod): void {
@@ -35,12 +48,24 @@ export default class Checkout {
       );
     });
 
-    console.log("------------------------------");
-    console.log(`TOTAL: R$ ${this.calculateTotal().toFixed(2)}`);
-    console.log(`PAGAMENTO: ${this.formPayment}`);
-    console.log("==============================\n");
+    if (this.client && this.client.getDiscount() > 0) {
+      const subtotal = this.listItens.reduce(
+        (t, i) => t + i.calculateFinalPrice(),
+        0,
+      );
+      const desc = subtotal * this.client.getDiscount();
+      console.log(`Subtotal: R$ ${subtotal.toFixed(2)}`);
+      console.log(
+        `Desconto (${this.client.getDiscount() * 100}%): -R$ ${desc.toFixed(2)}`,
+      );
+    }
 
-    // Limpa o carrinho para a próxima venda se necessário
-    this.listItens = [];
+    console.log(`TOTAL FINAL: R$ ${this.calculateTotal().toFixed(2)}`);
+    console.log(`PAGAMENTO: ${this.formPayment}`);
+    if (this.client)
+      console.log(
+        `CLIENTE: ${this.client.getName()} (CPF: ${this.client.cpf})`,
+      );
+    console.log("==============================\n");
   }
 }

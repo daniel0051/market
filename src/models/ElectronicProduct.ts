@@ -3,11 +3,6 @@ import Product from "./Product";
 export default class ElectronicProduct extends Product {
   private warrantyMonths: number = 0;
 
-  /* constructor(id: number, name: string, price: number, months: number) {
-    super(id, name, price);
-    this.warrantyMonths = months;
-  } */
-
   public getWarrantyMonths(): number {
     return this.warrantyMonths;
   }

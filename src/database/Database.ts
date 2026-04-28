@@ -1,18 +1,25 @@
 import Product from "../models/Product";
+import People from "../models/People";
 
 export default class Database {
-  public products: Product[] = [];
+  private products: Product[] = [];
+  private customers: People[] = [];
 
-  public save(product: Product): void {
+  public saveProduct(product: Product): void {
     this.products.push(product);
-    console.log(`[Database] ${product.getName()} armazenado com sucesso.`);
+    console.log(`[Database] Produto ${product.getName()} armazenado.`);
   }
 
-  public getAll(): Product[] {
-    return [...this.products];
+  public savePeople(person: People): void {
+    this.customers.push(person);
+    console.log(`[Database] Cliente ${person.getName()} armazenado.`);
   }
 
-  public findById(id: number): Product | undefined {
+  public findProductById(id: number): Product | undefined {
     return this.products.find((p) => p.getId() === id);
+  }
+
+  public findPeopleByCpf(cpf: string): People | undefined {
+    return this.customers.find((p) => p.cpf == cpf);
   }
 }

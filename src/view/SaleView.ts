@@ -16,50 +16,53 @@ export default class SaleView {
     let buying: boolean = true;
 
     console.log("\n==============================");
-    console.log("      NOVA VENDA INICIADA     ");
+    console.log("      CAIXA ABERTO - VENDA    ");
     console.log("==============================");
 
-    while (buying) {
-      console.log(
-        `\n-> Subtotal Parcial: R$ ${checkout.calculateTotal().toFixed(2)}`,
-      );
-
-      const idInput = this.prompt(
-        "Digite o ID do produto (ou 0 para FINALIZAR): ",
-      ).trim();
-
-      if (idInput === "") {
-        continue;
+    const cpf = this.prompt("CPF do Cliente (ou Enter para pular): ").trim();
+    if (cpf !== "") {
+      try {
+        const client = this.controller.peopleCtrl.findByCpf(cpf);
+        if (client) {
+          console.log(`[Venda] Cliente ${client.getName()} identificado.`);
+          checkout.idCliente(client);
+        }
+      } catch (e) {
+        console.log("[Venda] Cliente não cadastrado. Seguindo sem desconto.");
       }
+    }
 
-      const id = parseInt(idInput);
+    while (buying) {
+      console.log(`\nSubtotal: R$ ${checkout.calculateTotal().toFixed(2)}`);
+      const idInput = this.prompt("ID do Produto (0 para fechar): ").trim();
 
-      if (id === 0) {
+      if (idInput === "0" || idInput === "") {
         buying = false;
         break;
       }
 
-      const product = this.controller.findProductById(id);
+      const id = parseInt(idInput);
 
-      if (product) {
+      try {
+        const product =
+          this.controller.productCtrl.productService.searchProduct(id);
         checkout.addItem(product);
-        console.log(`Adicionado: ${product.getName()}`);
-      } else {
-        console.log("Produto não encontrado no sistema.");
+        console.log(`+ ${product.getName()} adicionado.`);
+      } catch (e) {
+        console.log("(!) Produto inexistente.");
       }
     }
 
-    const totalFinal = checkout.calculateTotal();
-
-    if (totalFinal > 0) {
+    if (checkout.calculateTotal() > 0) {
       this.finish(checkout);
     } else {
-      console.log("\n Venda encerrada sem itens ou com valor zerado.");
+      console.log("Venda cancelada (carrinho vazio).");
     }
   }
 
   private finish(checkout: Checkout): void {
-    console.log("Escolha o pagamento: 1. PIX | 2. Cartão | 3. Dinheiro");
+    console.log("\n--- PAGAMENTO ---");
+    console.log("1. PIX | 2. Cartão | 3. Dinheiro");
     const op = parseInt(this.prompt("> "));
 
     let method = PaymentMethod.CASH;
@@ -67,5 +70,11 @@ export default class SaleView {
     if (op === 2) method = PaymentMethod.CARD;
 
     checkout.finishSale(method);
+
+    this.controller.saleCtrl.fecharCarrinho(checkout);
+
+    console.log("==============================");
+    console.log("      VENDA FINALIZADA!       ");
+    console.log("==============================");
   }
 }
