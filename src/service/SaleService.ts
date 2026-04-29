@@ -10,5 +10,7 @@ export default class SaleService {
     );
 
     console.log("[Service] Venda persistida com sucesso.");
+
+    this.database.purchaseHistory(checkout);
   }
 }

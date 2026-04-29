@@ -34,7 +34,7 @@ export default class FirstScreen {
           new ProductRegistration(this.controller.productCtrl);
           break;
         case 2:
-          new SaleView(this.controller);
+          new SaleView(this.controller.SaleController);
           break;
         case 3:
           new ClientRegistration(this.controller.peopleCtrl);

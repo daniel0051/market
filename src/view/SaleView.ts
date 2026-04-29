@@ -1,12 +1,12 @@
 import PromptSync from "prompt-sync";
-import MainController from "../Controller/MainController";
 import Checkout, { PaymentMethod } from "../models/Checkout";
+import SaleController from "../Controller/SaleController";
 
 export default class SaleView {
   private prompt = PromptSync();
-  private controller: MainController;
+  private controller: SaleController;
 
-  constructor(controller: MainController) {
+  constructor(controller: SaleController) {
     this.controller = controller;
     this.startSale();
   }
@@ -22,7 +22,7 @@ export default class SaleView {
     const cpf = this.prompt("CPF do Cliente (ou Enter para pular): ").trim();
     if (cpf !== "") {
       try {
-        const client = this.controller.peopleCtrl.findByCpf(cpf);
+        const client = this.controller.foundCustomer(cpf);
         if (client) {
           console.log(`[Venda] Cliente ${client.getName()} identificado.`);
           checkout.idCliente(client);
@@ -44,8 +44,7 @@ export default class SaleView {
       const id = parseInt(idInput);
 
       try {
-        const product =
-          this.controller.productCtrl.productService.searchProduct(id);
+        const product = this.controller.searchProduct(id);
         checkout.addItem(product);
         console.log(`+ ${product.getName()} adicionado.`);
       } catch (e) {
@@ -71,7 +70,7 @@ export default class SaleView {
 
     checkout.finishSale(method);
 
-    this.controller.saleCtrl.fecharCarrinho(checkout);
+    this.controller.fecharCarrinho(checkout);
 
     console.log("==============================");
     console.log("      VENDA FINALIZADA!       ");

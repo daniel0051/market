@@ -11,7 +11,7 @@ export default class MainController {
 
   public peopleCtrl: PeopleController;
   public productCtrl: ProductController;
-  public saleCtrl: SaleController;
+  public SaleController: SaleController;
 
   constructor() {
     const peopleService = new PeopleService(this.database);
@@ -20,6 +20,10 @@ export default class MainController {
 
     this.peopleCtrl = new PeopleController(peopleService);
     this.productCtrl = new ProductController(productService);
-    this.saleCtrl = new SaleController(saleService);
+    this.SaleController = new SaleController(
+      saleService,
+      peopleService,
+      productService,
+    );
   }
 }

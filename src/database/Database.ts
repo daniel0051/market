@@ -1,9 +1,11 @@
 import Product from "../models/Product";
 import People from "../models/People";
+import Checkout from "../models/Checkout";
 
 export default class Database {
   private products: Product[] = [];
   private customers: People[] = [];
+  private sales: Checkout[] = [];
 
   public saveProduct(product: Product): void {
     this.products.push(product);
@@ -13,6 +15,10 @@ export default class Database {
   public savePeople(person: People): void {
     this.customers.push(person);
     console.log(`[Database] Cliente ${person.getName()} armazenado.`);
+  }
+
+  public purchaseHistory(products: Checkout): void {
+    this.sales.push(products);
   }
 
   public findProductById(id: number): Product | undefined {
