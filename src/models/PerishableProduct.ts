@@ -4,9 +4,9 @@ export default class PerishableProduct extends Product {
   private dateValidity!: Date;
 
   public setDateValidity(dateString: string): void {
-    const novaData = new Date(dateString);
-    novaData.setHours(0, 0, 0, 0);
-    this.dateValidity = novaData;
+    const newDate = new Date(dateString);
+    newDate.setHours(0, 0, 0, 0);
+    this.dateValidity = newDate;
   }
 
   getDateValidity(): String {
@@ -15,8 +15,8 @@ export default class PerishableProduct extends Product {
 
   public isExpired(): boolean {
     if (!this.dateValidity) return false;
-    const hoje = new Date();
-    hoje.setHours(0, 0, 0, 0);
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
 
     return new Date() > this.dateValidity;
   }
@@ -24,13 +24,13 @@ export default class PerishableProduct extends Product {
   public calculateFinalPrice(): number {
     if (this.isExpired()) return 0;
 
-    const hoje = new Date().getTime();
-    const vencimento = this.dateValidity.getTime();
-    const diferencaEmMs = vencimento - hoje;
+    const now = new Date().getTime();
+    const expirationDate = this.dateValidity.getTime();
+    const differenceInMs = expirationDate - now;
 
-    const dezDiasEmMs = 10 * 24 * 60 * 60 * 1000;
+    const tenDaysInMs = 10 * 24 * 60 * 60 * 1000;
 
-    if (diferencaEmMs <= dezDiasEmMs) {
+    if (differenceInMs <= tenDaysInMs) {
       return this.getBasePrice() * 0.8;
     }
 

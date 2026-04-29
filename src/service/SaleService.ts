@@ -6,7 +6,7 @@ export default class SaleService {
 
   public finalizarVenda(checkout: Checkout): void {
     console.log(
-      `[Service] Processando venda de R$ ${checkout.calculateTotal().toFixed(2)}`,
+      `[Service] Processando venda de R$ ${checkout.totalAmount().toFixed(2)}`,
     );
 
     console.log("[Service] Venda persistida com sucesso.");

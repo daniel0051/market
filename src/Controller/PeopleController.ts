@@ -3,9 +3,9 @@ import PeopleService from "../service/PeopleService";
 export default class PeopleController {
   constructor(private peopleService: PeopleService) {}
 
-  public save(data: any): void {
+  public save(clientDto: any): void {
     try {
-      const client = this.peopleService.register(data);
+      const client = this.peopleService.register(clientDto);
       console.log(
         `\n[Controller] Cliente ${client.getName()} cadastrado com sucesso!`,
       );

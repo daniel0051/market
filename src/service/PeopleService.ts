@@ -4,12 +4,12 @@ import People from "../models/People";
 export default class PeopleService {
   constructor(private database: Database) {}
 
-  public register(data: any) {
+  public register(input: any) {
     const newPeople = new People(
-      data.nome,
-      data.telefone,
-      data.cpf,
-      data.email,
+      input.nome,
+      input.telefone,
+      input.cpf,
+      input.email,
     );
 
     newPeople.setDiscount(5);
@@ -20,12 +20,12 @@ export default class PeopleService {
   }
 
   public searchCpf(cpf: string): People {
-    const cliente = this.database.findPeopleByCpf(cpf);
+    const client = this.database.findPeopleByCpf(cpf);
 
-    if (!cliente) {
+    if (!client) {
       throw new Error("Cliente não encontrado com este CPF.");
     }
 
-    return cliente;
+    return client;
   }
 }

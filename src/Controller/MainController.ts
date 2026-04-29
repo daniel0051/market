@@ -9,8 +9,8 @@ import SaleController from "./SaleController";
 export default class MainController {
   private database: Database = new Database();
 
-  public peopleCtrl: PeopleController;
-  public productCtrl: ProductController;
+  public PeopleController: PeopleController;
+  public productController: ProductController;
   public SaleController: SaleController;
 
   constructor() {
@@ -18,8 +18,8 @@ export default class MainController {
     const productService = new ProductService(this.database);
     const saleService = new SaleService(this.database);
 
-    this.peopleCtrl = new PeopleController(peopleService);
-    this.productCtrl = new ProductController(productService);
+    this.PeopleController = new PeopleController(peopleService);
+    this.productController = new ProductController(productService);
     this.SaleController = new SaleController(
       saleService,
       peopleService,

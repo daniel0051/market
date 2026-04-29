@@ -20,7 +20,7 @@ export default class Checkout {
     this.listItens.push(product);
   }
 
-  public calculateTotal(): number {
+  public totalAmount(): number {
     const subtotal = this.listItens.reduce(
       (total, item) => total + item.calculateFinalPrice(),
       0,
@@ -60,7 +60,7 @@ export default class Checkout {
       );
     }
 
-    console.log(`TOTAL FINAL: R$ ${this.calculateTotal().toFixed(2)}`);
+    console.log(`TOTAL FINAL: R$ ${this.totalAmount().toFixed(2)}`);
     console.log(`PAGAMENTO: ${this.formPayment}`);
     if (this.client)
       console.log(

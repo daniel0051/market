@@ -31,13 +31,13 @@ export default class FirstScreen {
 
       switch (option) {
         case 1:
-          new ProductRegistration(this.controller.productCtrl);
+          new ProductRegistration(this.controller.productController);
           break;
         case 2:
           new SaleView(this.controller.SaleController);
           break;
         case 3:
-          new ClientRegistration(this.controller.peopleCtrl);
+          new ClientRegistration(this.controller.PeopleController);
           break;
         case 4:
           open = false;

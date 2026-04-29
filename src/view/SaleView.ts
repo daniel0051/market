@@ -33,7 +33,7 @@ export default class SaleView {
     }
 
     while (buying) {
-      console.log(`\nSubtotal: R$ ${checkout.calculateTotal().toFixed(2)}`);
+      console.log(`\nSubtotal: R$ ${checkout.totalAmount().toFixed(2)}`);
       const idInput = this.prompt("ID do Produto (0 para fechar): ").trim();
 
       if (idInput === "0" || idInput === "") {
@@ -52,7 +52,7 @@ export default class SaleView {
       }
     }
 
-    if (checkout.calculateTotal() > 0) {
+    if (checkout.totalAmount() > 0) {
       this.finish(checkout);
     } else {
       console.log("Venda cancelada (carrinho vazio).");
