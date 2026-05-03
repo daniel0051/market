@@ -7,11 +7,16 @@ export default class People {
   private email: string;
   private discount: number = 0;
 
-  constructor(name: string, tel: string, cpf: string, email: string = "") {
+  constructor(name: string, tel: string, cpf: string);
+
+  constructor(name: string, tel: string, cpf: string, email: string);
+
+  constructor(name: string, tel: string, cpf: string, email?: string) {
     this.name = name;
     this.cpf = cpf;
     this.tel = tel;
-    this.email = email;
+    this.email = email || "";
+
     if (!validarCPF(cpf)) {
       console.error("CPF Inválido");
     }

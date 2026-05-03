@@ -12,13 +12,13 @@ export default class ClientRegistration {
 
   public registerClient(): void {
     console.log("\n--- Cadastro de Cliente ---");
-    const dados = {
-      nome: this.prompt("Nome: "),
-      telefone: this.prompt("Telefone: "),
+    const customerData = {
+      name: this.prompt("Nome: "),
+      tel: this.prompt("Telefone: "),
       cpf: this.prompt("CPF: "),
       email: this.prompt("Email (opcional): "),
     };
 
-    this.controller.save(dados);
+    this.controller.save(customerData);
   }
 }

@@ -5,17 +5,12 @@ export default class PeopleService {
   constructor(private database: Database) {}
 
   public register(input: any) {
-    const newPeople = new People(
-      input.nome,
-      input.telefone,
-      input.cpf,
-      input.email,
-    );
+    const newPeople = input.email
+      ? new People(input.name, input.tel, input.cpf, input.email)
+      : new People(input.name, input.tel, input.cpf);
 
     newPeople.setDiscount(5);
-
     this.database.savePeople(newPeople);
-
     return newPeople;
   }
 

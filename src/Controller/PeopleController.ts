@@ -14,8 +14,8 @@ export default class PeopleController {
 
   public findByCpf(cpf: string) {
     try {
-      const cliente = this.peopleService.searchCpf(cpf);
-      return cliente;
+      const client = this.peopleService.searchCpf(cpf);
+      return client;
     } catch (e: any) {
       console.log(e.message);
     }
