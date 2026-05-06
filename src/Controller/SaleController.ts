@@ -21,8 +21,10 @@ export default class SaleController {
   public fecharCarrinho(checkout: Checkout): void {
     try {
       this.saleService.finalizarVenda(checkout);
-    } catch (e: any) {
-      console.log(`Erro ao finalizar: ${e.message}`);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        console.log(`\n[Controller] Erro ao finalizar: ${e.message}`);
+      }
     }
   }
 }

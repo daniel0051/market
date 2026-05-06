@@ -3,29 +3,31 @@ import Product, { ProductType } from "../models/Product";
 import PerishableProduct from "../models/PerishableProduct";
 import ElectronicProduct from "../models/ElectronicProduct";
 import ProductByWeight from "../models/ProductByWeight";
+import { IProductInput } from "../types/interfaces";
 
 export default class ProductService {
   constructor(private database: Database) {}
 
-  public register(type: ProductType, productData: any): void {
+  public register(type: ProductType, productData: IProductInput): void {
     let product: Product;
 
     switch (type) {
       case ProductType.PERISHABLE:
         const p = new PerishableProduct();
-        if (productData.validade) p.setDateValidity(productData.validade);
+        if (productData.expirationDate)
+          p.setDateValidity(productData.expirationDate);
         product = p;
         break;
 
       case ProductType.ELECTRONIC:
         const e = new ElectronicProduct();
-        if (productData.garantia) e.setWarrantyMonths(productData.garantia);
+        if (productData.warranty) e.setWarrantyMonths(productData.warranty);
         product = e;
         break;
 
       case ProductType.WEIGHT:
         const w = new ProductByWeight();
-        if (productData.peso) w.setWeight(productData.peso);
+        if (productData.weight) w.setWeight(productData.weight);
         product = w;
         break;
       default:
@@ -33,8 +35,8 @@ export default class ProductService {
     }
 
     product.setId(productData.id);
-    product.setName(productData.nome);
-    product.setBasePrice(productData.preco);
+    product.setName(productData.name);
+    product.setBasePrice(productData.basePrice);
 
     this.database.saveProduct(product);
   }

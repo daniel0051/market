@@ -1,6 +1,7 @@
 import promptSync from "prompt-sync";
 import ProductController from "../Controller/ProductController";
 import { ProductType } from "../models/Product";
+import { IProductInput } from "../types/interfaces";
 
 export default class ProductRegistration {
   private prompt = promptSync();
@@ -23,20 +24,22 @@ export default class ProductRegistration {
       return;
     }
 
-    const productData: any = {
+    const productData: IProductInput = {
       id: parseInt(this.prompt("Digite o ID: ")),
-      nome: this.prompt("Digite o nome: "),
-      preco: parseFloat(this.prompt("Digite o preço: ")),
+      name: this.prompt("Digite o nome: "),
+      basePrice: parseFloat(this.prompt("Digite o preço: ")),
     };
 
     if (type === ProductType.PERISHABLE)
-      productData.validade = this.prompt("Data de validade (YYYY-MM-DD): ");
+      productData.expirationDate = this.prompt(
+        "Data de validade (YYYY-MM-DD): ",
+      );
 
     if (type === ProductType.ELECTRONIC)
-      productData.garantia = parseInt(this.prompt("Meses de garantia: "));
+      productData.warranty = parseInt(this.prompt("Meses de garantia: "));
 
     if (type === ProductType.WEIGHT)
-      productData.peso = parseFloat(this.prompt("Peso inicial: "));
+      productData.weight = parseFloat(this.prompt("Peso inicial: "));
 
     this.productController.save(type, productData);
   }

@@ -4,7 +4,7 @@ export enum ProductType {
   WEIGHT = "Por Peso",
 }
 
-export default class Product {
+export default abstract class Product {
   private id: number = 0;
   private name: string = "";
   private basePrice: number = 0;
@@ -50,7 +50,5 @@ export default class Product {
     }
   }
 
-  public calculateFinalPrice(): number {
-    return this.basePrice;
-  }
+  public abstract calculateFinalPrice(): number;
 }
