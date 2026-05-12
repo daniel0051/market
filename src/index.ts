@@ -1,4 +1,4 @@
-import MainController from "./Controller/MainController";
+import MainController from "./controller/MainController";
 import FirstScreen from "./view/FirstScreen";
 
 const main = new MainController();

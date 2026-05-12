@@ -1,19 +1,23 @@
 import promptSync from "prompt-sync";
-import ProductController from "../Controller/ProductController";
+import ProductController from "../controller/ProductController";
 import { ProductType } from "../models/Product";
 import { IProductInput } from "../types/interfaces";
 
 export default class ProductRegistration {
   private prompt = promptSync();
 
-  constructor(private productController: ProductController) {
-    this.registerProduct();
-  }
+  constructor(private productController: ProductController) {}
 
   public registerProduct(): void {
-    let choice = parseInt(
-      this.prompt("[1] - Perecível\n[2] - Eletrônico\n[3] - Por Peso\n"),
-    );
+    console.log("\n--- Tipo de Produto ---");
+    console.log("[1] - Perecível");
+    console.log("[2] - Eletrônico");
+    console.log("[3] - Por Peso");
+
+    let input = this.prompt("Opção: ").trim();
+    if (input === "") return;
+
+    let choice = parseInt(input);
 
     let type: ProductType;
     if (choice === 1) type = ProductType.PERISHABLE;
@@ -41,6 +45,11 @@ export default class ProductRegistration {
     if (type === ProductType.WEIGHT)
       productData.weight = parseFloat(this.prompt("Peso inicial: "));
 
-    this.productController.save(type, productData);
+    try {
+      this.productController.save(type, productData);
+      console.log(`Produto ${productData.name} cadastrado com sucesso`);
+    } catch (error) {
+      console.log(`Falha em cadastrar o produto ${error}`);
+    }
   }
 }

@@ -9,12 +9,10 @@ export default class Database {
 
   public saveProduct(product: Product): void {
     this.products.push(product);
-    console.log(`[Database] Produto ${product.getName()} armazenado.`);
   }
 
   public savePeople(person: People): void {
     this.customers.push(person);
-    console.log(`[Database] Cliente ${person.getName()} armazenado.`);
   }
 
   public purchaseHistory(products: Checkout): void {

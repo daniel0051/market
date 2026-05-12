@@ -1,4 +1,4 @@
-import { validarCPF } from "../utils/validateCpf";
+import { validarCPF } from "../common/validators/validateCpf";
 
 export default class People {
   readonly cpf: string = "";

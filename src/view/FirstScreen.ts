@@ -1,6 +1,6 @@
 import promptSync from "prompt-sync";
 import ProductRegistration from "./ProductRegistration";
-import MainController from "../Controller/MainController";
+import MainController from "../controller/MainController";
 import SaleView from "./SaleView";
 import ClientRegistration from "./ClientRegistration";
 
@@ -31,13 +31,20 @@ export default class FirstScreen {
 
       switch (option) {
         case 1:
-          new ProductRegistration(this.controller.productController);
+          const productView = new ProductRegistration(
+            this.controller.productController,
+          );
+          productView.registerProduct();
           break;
         case 2:
-          new SaleView(this.controller.SaleController);
+          const saleView = new SaleView(this.controller.SaleController);
+          saleView.startSale();
           break;
         case 3:
-          new ClientRegistration(this.controller.PeopleController);
+          const clientView = new ClientRegistration(
+            this.controller.PeopleController,
+          );
+          clientView.registerClient();
           break;
         case 4:
           open = false;

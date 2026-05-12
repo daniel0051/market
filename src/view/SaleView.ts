@@ -1,17 +1,13 @@
 import PromptSync from "prompt-sync";
 import Checkout, { PaymentMethod } from "../models/Checkout";
-import SaleController from "../Controller/SaleController";
+import SaleController from "../controller/SaleController";
 
 export default class SaleView {
   private prompt = PromptSync();
-  private controller: SaleController;
 
-  constructor(controller: SaleController) {
-    this.controller = controller;
-    this.startSale();
-  }
+  constructor(private controller: SaleController) {}
 
-  private startSale(): void {
+  public startSale(): void {
     const checkout = new Checkout();
     let buying: boolean = true;
 
@@ -24,11 +20,11 @@ export default class SaleView {
       try {
         const client = this.controller.foundCustomer(cpf);
         if (client) {
-          console.log(`[Venda] Cliente ${client.getName()} identificado.`);
+          console.log(`Cliente ${client.getName()} identificado.`);
           checkout.idCliente(client);
         }
       } catch (e) {
-        console.log("[Venda] Cliente não cadastrado. Seguindo sem desconto.");
+        console.log("Cliente não cadastrado. Seguindo sem desconto.");
       }
     }
 
@@ -70,7 +66,15 @@ export default class SaleView {
 
     checkout.finishSale(method);
 
-    this.controller.fecharCarrinho(checkout);
+    try {
+      this.controller.fecharCarrinho(checkout);
+      console.log(
+        `Processando venda de R$ ${checkout.totalAmount().toFixed(2)}`,
+      );
+      console.log("Venda persistida com sucesso.");
+    } catch (error) {
+      console.log(error);
+    }
 
     console.log("==============================");
     console.log("      VENDA FINALIZADA!       ");
