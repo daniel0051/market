@@ -4,6 +4,7 @@ import PerishableProduct from "../models/PerishableProduct";
 import ElectronicProduct from "../models/ElectronicProduct";
 import ProductByWeight from "../models/ProductByWeight";
 import { IProductInput } from "../types/interfaces";
+import { ProductNotFoundError } from "../common/errors/BusinessError";
 
 export default class ProductService {
   constructor(private database: Database) {}
@@ -43,7 +44,7 @@ export default class ProductService {
 
   public searchProduct(id: number) {
     const product = this.database.findProductById(id);
-    if (!product) throw new Error("Produto não encontrado!");
+    if (!product) throw new ProductNotFoundError(id);
     return product;
   }
 }

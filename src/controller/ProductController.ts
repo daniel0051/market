@@ -9,8 +9,7 @@ export default class ProductController {
     this.productService.register(type, productData);
   }
 
-  public displaySearch() {
-    const id = Number(prompt("Digite o ID: "));
-    this.productService.searchProduct(id);
+  public findById(id: number) {
+    return this.productService.searchProduct(id);
   }
 }

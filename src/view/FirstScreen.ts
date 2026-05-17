@@ -3,15 +3,12 @@ import ProductRegistration from "./ProductRegistration";
 import MainController from "../controller/MainController";
 import SaleView from "./SaleView";
 import ClientRegistration from "./ClientRegistration";
+import { ProductSearch } from "./ProductSearch";
 
 export default class FirstScreen {
   prompt = promptSync();
-  private controller: MainController;
 
-  constructor(controller: MainController) {
-    this.controller = controller;
-    this.mainMenu();
-  }
+  constructor(private controller: MainController) {}
 
   public mainMenu(): void {
     let open: boolean = true;
@@ -21,7 +18,8 @@ export default class FirstScreen {
       console.log("[1]- Cadastrar Produtos");
       console.log("[2]- Passar produto (Venda)");
       console.log("[3]- Cadastrar Cliente (Pessoa)");
-      console.log("[4]- Sair");
+      console.log("[4]- Buscar produto");
+      console.log("[5]- Sair");
 
       let input = this.prompt("> ").trim();
       if (input === "") {
@@ -47,6 +45,12 @@ export default class FirstScreen {
           clientView.registerClient();
           break;
         case 4:
+          const productViewSearch = new ProductSearch(
+            this.controller.productController,
+          );
+          productViewSearch.productSearch();
+          break;
+        case 5:
           open = false;
           console.log("Fechamento do caixa concluído.");
           break;
