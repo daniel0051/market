@@ -33,4 +33,8 @@ export default class People {
   public getName(): string {
     return this.name;
   }
+
+  public getCpf(): string {
+    return this.cpf;
+  }
 }

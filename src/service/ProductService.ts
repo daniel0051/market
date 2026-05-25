@@ -4,12 +4,22 @@ import PerishableProduct from "../models/PerishableProduct";
 import ElectronicProduct from "../models/ElectronicProduct";
 import ProductByWeight from "../models/ProductByWeight";
 import { IProductInput } from "../types/interfaces";
-import { ProductNotFoundError } from "../common/errors/BusinessError";
+import {
+  ProductNotFoundError,
+  ValidationError,
+} from "../common/errors/BusinessError";
 
 export default class ProductService {
   constructor(private database: Database) {}
 
-  public register(type: ProductType, productData: IProductInput): void {
+  public register(type: ProductType, productData: IProductInput): Product {
+    if (productData.basePrice <= 0) {
+      throw new ValidationError(
+        "basePrice",
+        "O preço do produto deve ser maior que zero.",
+      );
+    }
+
     let product: Product;
 
     switch (type) {
@@ -40,6 +50,7 @@ export default class ProductService {
     product.setBasePrice(productData.basePrice);
 
     this.database.saveProduct(product);
+    return product;
   }
 
   public searchProduct(id: number) {

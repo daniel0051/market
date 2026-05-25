@@ -67,7 +67,7 @@ export default class SaleView {
     checkout.finishSale(method);
 
     try {
-      this.controller.fecharCarrinho(checkout);
+      this.controller.closeCart(checkout);
       console.log(
         `Processando venda de R$ ${checkout.totalAmount().toFixed(2)}`,
       );

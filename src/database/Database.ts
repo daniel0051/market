@@ -19,6 +19,10 @@ export default class Database {
     this.sales.push(products);
   }
 
+  public getSales(): Checkout[] {
+    return this.sales;
+  }
+
   public findProductById(id: number): Product | undefined {
     return this.products.find((p) => p.getId() === id);
   }

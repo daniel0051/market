@@ -18,7 +18,7 @@ export default class SaleController {
     return this.productService.searchProduct(id);
   }
 
-  public fecharCarrinho(checkout: Checkout): void {
-    this.saleService.finalizarVenda(checkout);
+  public closeCart(checkout: Checkout): void {
+    this.saleService.finalizeSale(checkout);
   }
 }

@@ -12,6 +12,13 @@ export class ProductNotFoundError extends Error {
   }
 }
 
+export class PeopleNotFoundError extends Error {
+  constructor(cpf: string) {
+    super(`Pessoa com CPF ${cpf} não encontrada ou não existe.`);
+    this.name = "PeopleNotFoundError";
+  }
+}
+
 export class ValidationError extends Error {
   constructor(field: string, reason: string) {
     super(`Erro de validação no campo "${field}": ${reason}`);

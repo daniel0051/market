@@ -4,7 +4,7 @@ import Checkout from "../models/Checkout";
 export default class SaleService {
   constructor(private database: Database) {}
 
-  public finalizarVenda(checkout: Checkout): void {
+  public finalizeSale(checkout: Checkout): void {
     this.database.purchaseHistory(checkout);
   }
 }

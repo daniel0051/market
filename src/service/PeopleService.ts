@@ -1,3 +1,4 @@
+import { PeopleNotFoundError } from "@/common/errors/BusinessError";
 import Database from "../database/Database";
 import People from "../models/People";
 import { IPeopleInput } from "../types/interfaces";
@@ -19,7 +20,7 @@ export default class PeopleService {
     const client = this.database.findPeopleByCpf(cpf);
 
     if (!client) {
-      throw new Error("Cliente não encontrado com este CPF.");
+      throw new PeopleNotFoundError(cpf);
     }
 
     return client;
