@@ -1,4 +1,4 @@
-import { PeopleNotFoundError } from "@/common/errors/BusinessError";
+import { PeopleNotFoundError } from "../common/errors/BusinessError";
 import Database from "../database/Database";
 import People from "../models/People";
 import { IPeopleInput } from "../types/interfaces";

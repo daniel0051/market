@@ -1,11 +1,11 @@
 import {
   ProductNotFoundError,
   ValidationError,
-} from "@/common/errors/BusinessError";
-import Database from "@/database/Database";
-import { ProductType } from "@/models/Product";
-import ProductService from "@/service/ProductService";
-import { IProductInput } from "@/types/interfaces";
+} from "../src/common/errors/BusinessError";
+import Database from "../src/database/Database";
+import { ProductType } from "../src/models/Product";
+import ProductService from "../src/service/ProductService";
+import { IProductInput } from "../src/types/interfaces";
 
 describe("ProductService - Testes Unitários", () => {
   let database: Database;

@@ -1,6 +1,6 @@
-import Database from "@/database/Database";
-import SaleService from "@/service/SaleService";
-import Checkout, { PaymentMethod } from "@/models/Checkout";
+import Database from "../src/database/Database";
+import SaleService from "../src/service/SaleService";
+import Checkout, { PaymentMethod } from "../src/models/Checkout";
 
 describe("SaleService - Testes Unitários", () => {
   let database: Database;

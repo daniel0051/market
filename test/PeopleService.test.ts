@@ -1,7 +1,7 @@
-import { PeopleNotFoundError } from "@/common/errors/BusinessError";
-import Database from "@/database/Database";
-import PeopleService from "@/service/PeopleService";
-import { IPeopleInput } from "@/types/interfaces";
+import { PeopleNotFoundError } from "../src/common/errors/BusinessError";
+import Database from "../src/database/Database";
+import PeopleService from "../src/service/PeopleService";
+import { IPeopleInput } from "../src/types/interfaces";
 
 describe("PeopleService - Testes Unitários", () => {
   let database: Database;
