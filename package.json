@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "node -e \"const fs = require('fs'); fs.rmSync('dist', { recursive: true, force: true });\"",
-    "build": "npm run clean && tsc",
+    "build": "tsc",
     "start": "node dist/src/index.js",
     "dev": "tsc && node dist/src/index.js",
     "test": "vitest run",
