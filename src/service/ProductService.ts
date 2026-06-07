@@ -53,9 +53,11 @@ export default class ProductService {
     return product;
   }
 
-  public searchProduct(id: number) {
-    const product = this.database.findProductById(id);
-    if (!product) throw new ProductNotFoundError(id);
-    return product;
+  public searchProduct(id: number): Product {
+    return this.database.findOrThrow(
+      this.database.getProducts(),
+      (p) => p.getId() === id,
+      new ProductNotFoundError(id),
+    );
   }
 }

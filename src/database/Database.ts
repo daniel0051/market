@@ -19,6 +19,14 @@ export default class Database {
     this.sales.push(products);
   }
 
+  public getProducts(): Product[] {
+    return this.products;
+  }
+
+  public getCustomers(): People[] {
+    return this.customers;
+  }
+
   public getSales(): Checkout[] {
     return this.sales;
   }
@@ -29,5 +37,19 @@ export default class Database {
 
   public findPeopleByCpf(cpf: string): People | undefined {
     return this.customers.find((p) => p.cpf == cpf);
+  }
+
+  public findOrThrow<T>(
+    items: T[],
+    predicate: (item: T) => boolean,
+    errorToThrow: Error,
+  ): T {
+    const item = items.find(predicate);
+
+    if (!item) {
+      throw errorToThrow;
+    }
+
+    return item;
   }
 }

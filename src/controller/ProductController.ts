@@ -1,6 +1,7 @@
 import { ProductType } from "../models/Product";
 import ProductService from "../service/ProductService";
 import { IProductInput } from "../types/interfaces";
+import { handleControllerAction } from "../common/utils/handleResponse";
 
 export default class ProductController {
   constructor(public productService: ProductService) {}
@@ -10,6 +11,6 @@ export default class ProductController {
   }
 
   public findById(id: number) {
-    return this.productService.searchProduct(id);
+    return handleControllerAction(() => this.productService.searchProduct(id));
   }
 }

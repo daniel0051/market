@@ -1,3 +1,4 @@
+import { handleControllerAction } from "../common/utils/handleResponse";
 import PeopleService from "../service/PeopleService";
 import { IPeopleInput } from "../types/interfaces";
 
@@ -9,7 +10,6 @@ export default class PeopleController {
   }
 
   public findByCpf(cpf: string) {
-    const cliente = this.peopleService.searchCpf(cpf);
-    return cliente;
+    return handleControllerAction(() => this.peopleService.searchCpf(cpf));
   }
 }

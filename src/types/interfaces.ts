@@ -13,3 +13,9 @@ export interface IProductInput {
   warranty?: number;
   weight?: number;
 }
+
+export interface AppResponse<T> {
+  success: boolean;
+  data: T | null;
+  message: string;
+}

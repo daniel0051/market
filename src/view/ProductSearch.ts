@@ -1,6 +1,5 @@
 import PromptSync from "prompt-sync";
 import ProductController from "../controller/ProductController";
-import { ProductNotFoundError } from "../common/errors/BusinessError";
 
 export class ProductSearch {
   private prompt = PromptSync();
@@ -16,22 +15,18 @@ export class ProductSearch {
       return;
     }
 
-    try {
-      const product = this.ProductController.findById(idInput);
-
-      console.log("\n=========================");
-      console.log(`Produto Encontrado: ${product.getName()}`);
-      console.log(`Preço Base: R$ ${product.getBasePrice().toFixed(2)}`);
-      console.log(
-        `Preço Final: R$ ${product.calculateFinalPrice().toFixed(2)}`,
-      );
-      console.log("=========================");
-    } catch (error: unknown) {
-      if (error instanceof ProductNotFoundError) {
-        console.log(`\n[Consulta]: ${error.message}`);
-      } else if (error instanceof Error) {
-        console.log(`\n[Erro]: ${error.message}`);
-      }
+    const response = this.ProductController.findById(idInput);
+    if (!response.success || !response.data) {
+      console.log(`\n[Consulta]: ${response.message}`);
+      return;
     }
+
+    const product = response.data;
+
+    console.log("\n=========================");
+    console.log(`Produto Encontrado: ${product.getName()}`);
+    console.log(`Preço Base: R$ ${product.getBasePrice().toFixed(2)}`);
+    console.log(`Preço Final: R$ ${product.calculateFinalPrice().toFixed(2)}`);
+    console.log("=========================");
   }
 }

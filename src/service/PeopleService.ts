@@ -17,12 +17,10 @@ export default class PeopleService {
   }
 
   public searchCpf(cpf: string): People {
-    const client = this.database.findPeopleByCpf(cpf);
-
-    if (!client) {
-      throw new PeopleNotFoundError(cpf);
-    }
-
-    return client;
+    return this.database.findOrThrow(
+      this.database.getCustomers(),
+      (p) => p.cpf === cpf,
+      new PeopleNotFoundError(cpf),
+    );
   }
 }
